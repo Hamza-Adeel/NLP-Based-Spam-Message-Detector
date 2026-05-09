@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AI Spam & Scam Detector</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-dark text-light">
+
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-glass fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-info" href="/">
+                <i class="bi bi-shield-lock-fill me-2"></i>ScamGuard AI
+            </a>
+            <button class="navbar-toggler border-info" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link fw-medium" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active fw-medium" href="/dashboard">Analytics Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link fw-medium" href="/about">About</a></li>
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                        <button id="themeToggle" class="btn btn-outline-info btn-sm rounded-circle shadow-sm" style="width: 38px; height: 38px;">
+                            <i class="bi bi-moon-fill"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 120px; min-height: 80vh;">
+        <div class="d-flex justify-content-between align-items-center mb-5 fade-in-up">
+            <h2 class="fw-bold mb-0"><i class="bi bi-activity me-3 text-info"></i>System Analytics</h2>
+            <button class="btn btn-outline-info btn-sm rounded-pill px-3" onclick="location.reload()">
+                <i class="bi bi-arrow-clockwise me-1"></i>Refresh Data
+            </button>
+        </div>
+        
+        <!-- Summary Cards -->
+        <div class="row mb-5">
+            <div class="col-md-4 mb-4 fade-in-up delay-1">
+                <div class="card glass-card text-center h-100 p-4 border-info">
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <i class="bi bi-hdd-network display-5 text-info mb-3 opacity-75"></i>
+                        <h1 class="display-3 text-info fw-bold mb-1">{{ total_scanned }}</h1>
+                        <p class="text-muted fw-semibold text-uppercase tracking-wider mb-0 small">Total Scanned</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-in-up delay-2">
+                <div class="card glass-card text-center h-100 p-4 border-danger">
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <i class="bi bi-shield-x display-5 text-danger mb-3 opacity-75"></i>
+                        <h1 class="display-3 text-danger fw-bold mb-1">{{ spam_count }}</h1>
+                        <p class="text-muted fw-semibold text-uppercase tracking-wider mb-0 small">Threats Detected</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-in-up delay-3">
+                <div class="card glass-card text-center h-100 p-4 border-success">
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <i class="bi bi-shield-check display-5 text-success mb-3 opacity-75"></i>
+                        <h1 class="display-3 text-success fw-bold mb-1">{{ ham_count }}</h1>
+                        <p class="text-muted fw-semibold text-uppercase tracking-wider mb-0 small">Safe Messages</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="row mb-5 justify-content-center">
+            <!-- Pie Chart -->
+            <div class="col-lg-6 col-md-8 mb-4 fade-in-up delay-2">
+                <div class="card glass-card h-100 p-4">
+                    <div class="card-body">
+                        <h5 class="card-title text-center mb-4 fw-semibold"><i class="bi bi-pie-chart-fill me-2 text-info"></i>Threat Distribution</h5>
+                        <div style="position: relative; height:350px; width:100%">
+                            <canvas id="ratioChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-4 mt-auto w-100 text-center">
+        <div class="container">
+            <p class="mb-0 text-muted small">&copy; 2026 ScamGuard AI. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Data Injection for Chart.js -->
+    <script>
+        const spamCount = {{ spam_count }};
+        const hamCount = {{ ham_count }};
+    </script>
+    
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
