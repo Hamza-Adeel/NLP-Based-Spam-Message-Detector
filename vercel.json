@@ -3,10 +3,7 @@
   "builds": [
     {
       "src": "app.py",
-      "use": "@vercel/python",
-      "config": {
-        "includeFiles": ["vectorizer.pkl", "model.pkl"]
-      }
+      "use": "@vercel/python"
     }
   ],
   "routes": [
