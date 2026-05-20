@@ -66,8 +66,6 @@ def load_models():
     return vectorizer, model
 
 # Load models at startup
-print("MODEL:", os.path.exists("model.pkl"))
-print("VECT:", os.path.exists("vectorizer.pkl"))
 
 vectorizer, model = load_models()
 
